@@ -1178,6 +1178,20 @@ vendor/lib64/vendor.mediatek.hardware.camera.lomoeffect@1.0.so
 vendor/lib64/vendor.mediatek.hardware.camera.postproc@1.0.so
 vendor/lib64/vendor.mediatek.hardware.camera.security@1.0.so
 vendor/lib64/vendor.mediatek.hardware.power@2.0.so
+vendor/xiaomi/ruby/proprietary/system/lib/libcamera_ispinterface_jni.xiaomi.so
+vendor/xiaomi/ruby/proprietary/system/lib/libhidltransport.so
+vendor/xiaomi/ruby/proprietary/system/lib/libmtkisp_metadata_sys.so
+vendor/xiaomi/ruby/proprietary/system/lib/libui.so
+vendor/xiaomi/ruby/proprietary/system/lib/vendor.mediatek.hardware.camera.isphal@1.0.so
+vendor/xiaomi/ruby/proprietary/system/lib64/libcamera_ispinterface_jni.xiaomi.so
+vendor/xiaomi/ruby/proprietary/system/lib64/libhidltransport.so
+vendor/xiaomi/ruby/proprietary/system/lib64/libmtkisp_metadata_sys.so
+vendor/xiaomi/ruby/proprietary/system/lib64/libui.so
+vendor/xiaomi/ruby/proprietary/system/lib64/vendor.mediatek.hardware.camera.isphal@1.0.so
+vendor/xiaomi/ruby/proprietary/vendor/lib/libhidltransport.so
+vendor/xiaomi/ruby/proprietary/vendor/lib/libperfctl_vendor.so
+vendor/xiaomi/ruby/proprietary/vendor/lib64/libhidltransport.so
+vendor/xiaomi/ruby/proprietary/vendor/lib64/libperfctl_vendor.so
 
 # Camera Configs
 vendor/etc/camera/model/dof_model/capture_cache
