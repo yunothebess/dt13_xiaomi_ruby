@@ -15,88 +15,62 @@ echo -e "
 
 # Function to remove a directory if it exists and echo a message.
 remove_directory() {
-    if [ -d "$1" ]; then
-        echo -e "🐱 Meow! Removing the old $1 directory..."
-        rm -rf "$1"
-        echo -e "🐱 Meow! $1 directory has been removed.\n"
+    local directory="$1"
+    if [ -d "$directory" ]; then
+        echo -e "🐱 Meow! Removing the old $directory directory..."
+        rm -rf "$directory"
+        echo -e "🐱 Meow! $directory directory has been removed.\n"
     else
-        echo -e "🐱 Meow! $1 directory does not exist. No need to remove.\n"
+        echo -e "🐱 Meow! $directory directory does not exist. No need to remove.\n"
     fi
 }
 
-# Function to show a progress bar.
-progress_bar() {
-    local duration="$1"
-    local progress="0"
-    while [ $progress -lt 100 ]; do
-        echo -ne "Progress: [$progress%]\r"
-        sleep "$duration"
-        ((progress += 10))
-    done
-    echo "Progress: [100%]"
+# Function to clone a Git repository with error handling.
+clone_repository() {
+    local url="$1"
+    local branch="$2"
+    local directory="$3"
+    
+    if [ -d "$directory" ]; then
+        echo -e "🐱 Meow! Skipping cloning as $directory already exists.\n"
+    else
+        echo -n "🐱 Meow! Cloning $url... "
+        if git clone --depth 1 "$url" -b "$branch" "$directory" &> /dev/null; then
+            echo -e "🐱 Meow! Successfully cloned $url for $device_name.\n"
+        else
+            echo -e "🐱 Meow! Cloning $url for $device_name failed.\n"
+        fi
+    fi
 }
 
-# Remove the existing ./kernel/xiaomi/mt6877 directory.
+# Remove the existing directories.
 remove_directory "./kernel/xiaomi/mt6877"
-
-# Clone the android_kernel_xiaomi_ruby repository with depth=1 to ./kernel/xiaomi/mt6877.
-git clone --depth 1 https://github.com/PQEnablers-Devices/android_kernel_xiaomi_mt6877 -b lineage-20 ./kernel/xiaomi/mt6877 &
-echo -n "🐱 Meow! Cloning the android_kernel_xiaomi_ruby repository... "
-progress_bar 5
-wait
-echo -e "🐱 Meow! Successfully cloned the new android_kernel_xiaomi_ruby repository for $device_name.\n"
-
-# Remove the existing ./vendor/xiaomi/ruby directory.
 remove_directory "./vendor/xiaomi/ruby"
-
-# Clone the android_vendor_xiaomi_ruby repository with the 'dolby/lineage-20' branch to ./vendor/xiaomi/ruby.
-git clone https://github.com/yunothebess/android_vendor_xiaomi_ruby -b miui_cam ./vendor/xiaomi/ruby &
-echo -n "🐱 Meow! Cloning the android_vendor_xiaomi_ruby repository... "
-progress_bar 5
-wait
-echo -e "🐱 Meow! Successfully cloned the new android_vendor_xiaomi_ruby repository with camera commits for $device_name.\n"
-
-# Remove the existing ./device/mediatek/sepolicy_vndr directory.
 remove_directory "./device/mediatek/sepolicy_vndr"
 
-# Clone the android_device_mediatek_sepolicy_vndr repository to ./device/mediatek/sepolicy_vndr.
-git clone https://github.com/PQEnablers-Devices/android_device_mediatek_sepolicy_vndr ./device/mediatek/sepolicy_vndr &
-echo -n "🐱 Meow! Cloning the android_device_mediatek_sepolicy_vndr repository... "
-progress_bar 5
-wait
-echo -e "🐱 Meow! Successfully cloned the new android_device_mediatek_sepolicy_vndr repository for $device_name.\n"
+# Parallel cloning of repositories.
+clone_repository "https://github.com/PQEnablers-Devices/android_kernel_xiaomi_ruby" "lineage-20" "./kernel/xiaomi/mt6877"
+clone_repository "https://github.com/yunothebess/android_vendor_xiaomi_ruby" "miui_cam" "./vendor/xiaomi/ruby"
+clone_repository "https://github.com/PQEnablers-Devices/android_device_mediatek_sepolicy_vndr" "master" "./device/mediatek/sepolicy_vndr"
 
-# Function to remove the "hardware/mediatek" directory if it exists.
-remove_hardware_mediatek_directory() {
-    if [ -d "./hardware/mediatek" ]; then
-        echo -e "🐱 Meow! Removing the old hardware/mediatek directory..."
-        rm -rf "./hardware/mediatek"
-        echo -e "🐱 Meow! hardware/mediatek directory has been removed.\n"
-    fi
-}
+# Remove the "hardware/mediatek" directory if it exists.
+if [ -d "./hardware/mediatek" ]; then
+    echo -e "🐱 Meow! Removing the old hardware/mediatek directory..."
+    rm -rf "./hardware/mediatek"
+    echo -e "🐱 Meow! hardware/mediatek directory has been removed.\n"
+fi
 
-# Remove the existing ./hardware/mediatek directory.
-remove_hardware_mediatek_directory
-
-# Clone the android_hardware_mediatek repository with the 'lineage-20-foss' branch to ./hardware/mediatek.
-git clone https://github.com/PQEnablers-Devices/android_hardware_mediatek -b lineage-20-foss ./hardware/mediatek &
-echo -n "🐱 Meow! Cloning the android_hardware_mediatek repository... "
-progress_bar 5
-wait
-echo -e "🐱 Meow! Successfully cloned the new android_hardware_mediatek repository for $device_name.\n"
+# Clone the hardware/mediatek repository.
+clone_repository "https://github.com/PQEnablers-Devices/android_hardware_mediatek" "lineage-20-foss" "./hardware/mediatek"
 
 # Check if the ./hardware/xiaomi directory exists.
 if [ ! -d "./hardware/xiaomi" ]; then
-    # Clone the android_hardware_xiaomi repository with the 'lineage-20' branch to ./hardware/xiaomi only if it doesn't exist.
-    git clone https://github.com/LineageOS/android_hardware_xiaomi -b lineage-20 ./hardware/xiaomi &
-    echo -n "🐱 Meow! Cloning the android_hardware_xiaomi repository... "
-    progress_bar 5
-    wait
-    echo -e "🐱 Meow! Successfully cloned the android_hardware_xiaomi repository for $device_name.\n"
+    # Clone the android_hardware_xiaomi repository.
+    clone_repository "https://github.com/LineageOS/android_hardware_xiaomi" "lineage-20" "./hardware/xiaomi"
 fi
 
 # Display a kitty completion message.
-echo "🐾 Meow! All repositories have been successfully cloned for $device_name's an-13 builds with stock camera make sure to clone the firmwares/native with miui camera commits. Happy meowtifying! 🐾"
+echo "🐾 Meow! All repositories have been successfully cloned for $device_name's an-13 builds with stock camera. Make sure to clone the firmwares/native with MIUI camera commits. Happy meowtifying! 🐾"
 
 # Kitty reminder about removing vendorsetup.sh.
 echo "🐱 Meow! Don't forget to remove vendorsetup.sh from the ./device/xiaomi/ruby folder. 🐱"
