@@ -40,7 +40,7 @@ progress_bar() {
 remove_directory "./kernel/xiaomi/mt6877"
 
 # Clone the android_kernel_xiaomi_ruby repository with depth=1 to ./kernel/xiaomi/mt6877.
-git clone --depth 1 https://github.com/PQEnablers-Devices/android_kernel_xiaomi_ruby -b lineage-20 ./kernel/xiaomi/mt6877 &
+git clone --depth 1 https://github.com/PQEnablers-Devices/android_kernel_xiaomi_mt6877 -b lineage-20 ./kernel/xiaomi/mt6877 &
 echo -n "🐱 Meow! Cloning the android_kernel_xiaomi_ruby repository... "
 progress_bar 5
 wait
