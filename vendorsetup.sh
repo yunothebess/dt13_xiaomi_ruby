@@ -49,7 +49,7 @@ remove_directory "./vendor/xiaomi/ruby"
 remove_directory "./device/mediatek/sepolicy_vndr"
 
 # Parallel cloning of repositories.
-clone_repository "https://github.com/PQEnablers-Devices/android_kernel_xiaomi_ruby" "lineage-20" "./kernel/xiaomi/mt6877"
+clone_repository "https://github.com/PQEnablers-Devices/android_kernel_xiaomi_mt6877" "lineage-20" "./kernel/xiaomi/mt6877"
 clone_repository "https://github.com/yunothebess/android_vendor_xiaomi_ruby" "miui_cam" "./vendor/xiaomi/ruby"
 clone_repository "https://github.com/PQEnablers-Devices/android_device_mediatek_sepolicy_vndr" "master" "./device/mediatek/sepolicy_vndr"
 
