@@ -50,11 +50,11 @@ echo -e "🐱 Meow! Successfully cloned the new android_kernel_xiaomi_ruby repos
 remove_directory "./vendor/xiaomi/ruby"
 
 # Clone the android_vendor_xiaomi_ruby repository with the 'dolby/lineage-20' branch to ./vendor/xiaomi/ruby.
-git clone https://github.com/yunothebess/android_vendor_xiaomi_ruby -b lineage-20 ./vendor/xiaomi/ruby &
+git clone https://github.com/yunothebess/android_vendor_xiaomi_ruby -b miui_cam ./vendor/xiaomi/ruby &
 echo -n "🐱 Meow! Cloning the android_vendor_xiaomi_ruby repository... "
 progress_bar 5
 wait
-echo -e "🐱 Meow! Successfully cloned the new android_vendor_xiaomi_ruby repository for $device_name.\n"
+echo -e "🐱 Meow! Successfully cloned the new android_vendor_xiaomi_ruby repository with camera commits for $device_name.\n"
 
 # Remove the existing ./device/mediatek/sepolicy_vndr directory.
 remove_directory "./device/mediatek/sepolicy_vndr"
@@ -96,7 +96,7 @@ if [ ! -d "./hardware/xiaomi" ]; then
 fi
 
 # Display a kitty completion message.
-echo "🐾 Meow! All repositories have been successfully cloned for $device_name's an-13 builds. Happy meowtifying! 🐾"
+echo "🐾 Meow! All repositories have been successfully cloned for $device_name's an-13 builds with stock camera make sure to clone the firmwares/native with miui camera commits. Happy meowtifying! 🐾"
 
 # Kitty reminder about removing vendorsetup.sh.
 echo "🐱 Meow! Don't forget to remove vendorsetup.sh from the ./device/xiaomi/ruby folder. 🐱"
